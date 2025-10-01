@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiya - iOS & Game Developer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 80px 20px 60px;
+            position: relative;
+        }
+
+        .profile-photo-container {
+            margin-bottom: 30px;
+            animation: fadeInDown 1s ease;
+        }
+
+        .profile-photo {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .profile-photo:hover {
+            transform: scale(1.05);
+        }
+
+        .profile-photo-placeholder {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            margin: 0 auto;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            animation: fadeInDown 1s ease 0.2s both;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            opacity: 0.9;
+            margin-bottom: 30px;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.85;
+            animation: fadeInUp 1s ease 0.6s both;
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-icon {
+            font-size: 2.5rem;
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            padding: 0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+        }
+
+        .project-card:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .project-image-container {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .project-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .project-card:hover .project-image {
+            transform: scale(1.1);
+        }
+
+        .project-image-placeholder {
+            font-size: 4rem;
+            opacity: 0.5;
+        }
+
+        .project-content {
+            padding: 25px;
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 15px;
+        }
+
+        .project-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .project-year {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            white-space: nowrap;
+        }
+
+        .project-description {
+            line-height: 1.6;
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+
+        .project-role {
+            display: inline-block;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .skill-tag {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .skill-tag:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            opacity: 0.8;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .section {
+                padding: 25px;
+            }
+
+            .project-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-photo, .profile-photo-placeholder {
+                width: 150px;
+                height: 150px;
+            }
+        }
+
+        .floating-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .shape {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .shape1 { width: 80px; height: 80px; top: 10%; left: 10%; animation-delay: 0s; }
+        .shape2 { width: 60px; height: 60px; top: 70%; left: 80%; animation-delay: 2s; }
+        .shape3 { width: 100px; height: 100px; top: 50%; left: 50%; animation-delay: 4s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(180deg); }
+        }
+
+        .upload-info {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            border-left: 4px solid rgba(255, 255, 255, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-shapes">
+        <div class="shape shape1"></div>
+        <div class="shape shape2"></div>
+        <div class="shape shape3"></div>
+    </div>
+
+    <header>
+        <div class="profile-photo-container">
+            <!-- Replace the src with your actual photo URL -->
+            <div class="profile-photo-placeholder">👩‍💻</div>
+            <!-- Uncomment and use this when you have your photo -->
+            <!-- <img src="YOUR_PHOTO_URL_HERE" alt="Tiya" class="profile-photo"> -->
+        </div>
+        <h1 class="hero-title">👋 Hi, I'm Tiya!</h1>
+        <p class="hero-subtitle">iOS & Game Developer</p>
+        <p class="hero-description">
+            I'm a passionate developer who loves turning ideas into interactive and meaningful experiences. 
+            From building apps that help people in their daily lives to creating fun game prototypes, 
+            I enjoy exploring creativity through technology. I'm always learning, collaborating, and pushing 
+            myself to design solutions that are both useful and delightful.
+        </p>
+    </header>
+
+    <div class="container">
+        <div class="upload-info">
+            📸 <strong>To add images:</strong> Replace placeholder image sources with your actual image URLs (from image hosting services like Imgur, Cloudinary, or your own server)
+        </div>
+
+        <!-- iOS Projects Section -->
+        <section class="section">
+            <h2 class="section-title">
+                <span class="section-icon">📱</span>
+                iOS Projects
+            </h2>
+            <div class="project-grid">
+                <div class="project-card">
+                    <div class="project-image-container">
+                        <div class="project-image-placeholder">📱</div>
+                        <!-- Uncomment and replace with your image URL -->
+                        <!-- <img src="YOUR_FITBAE_IMAGE_URL" alt="FitBae App" class="project-image"> -->
+                    </div>
+                    <div class="project-content">
+                        <div class="project-header">
+                            <div>
+                                <h3 class="project-title">FitBae</h3>
+                                <span class="project-year">2025 • App Store</span>
+                            </div>
+                        </div>
+                        <p class="project-description">
+                            A women's weight-loss app that aligns routines with menstrual phases. Built core features, 
+                            tested the app, and helped organize team tasks for better collaboration.
+                        </p>
+                        <span class="project-role">Coder & Task Coordinator</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image-container">
+                        <div class="project-image-placeholder">📚</div>
+                        <!-- <img src="YOUR_CIBOOK_IMAGE_URL" alt="CiBook App" class="project-image"> -->
+                    </div>
+                    <div class="project-content">
+                        <div class="project-header">
+                            <div>
+                                <h3 class="project-title">CiBook</h3>
+                                <span class="project-year">2025 • Apple Developer Academy</span>
+                            </div>
+                        </div>
+                        <p class="project-description">
+                            iOS app recommending the next book based on user's reading history and genres. 
+                            Implemented recommendation logic and app interface.
+                        </p>
+                        <span class="project-role">Coder</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image-container">
+                        <div class="project-image-placeholder">⚡</div>
+                        <!-- <img src="YOUR_LESSTRIK_IMAGE_URL" alt="Lesstrik App" class="project-image"> -->
+                    </div>
+                    <div class="project-content">
+                        <div class="project-header">
+                            <div>
+                                <h3 class="project-title">Lesstrik</h3>
+                                <span class="project-year">2025 • Apple Developer Academy</span>
+                            </div>
+                        </div>
+                        <p class="project-description">
+                            iOS app that calculates monthly electricity costs for residents in BPJS housing based 
+                            on daily usage of electronic devices.
+                        </p>
+                        <span class="project-role">Designer</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image-container">
+                        <div class="project-image-placeholder">🎾</div>
+                        <!-- <img src="YOUR_TOSSTUNE_IMAGE_URL" alt="TossTune App" class="project-image"> -->
+                    </div>
+                    <div class="project-content">
+                        <div class="project-header">
+                            <div>
+                                <h3 class="project-title">TossTune</h3>
+                                <span class="project-year">2025 • Apple Developer Academy</span>
+                            </div>
+                        </div>
+                        <p class="project-description">
+                            iOS app for tennis players to train toss form for serving. Designed app interface and 
+                            experience to ensure smooth user training flow.
+                        </p>
+                        <span class="project-role">Designer</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Game Development Section -->
+        <section class="section">
+            <h2 class="section-title">
+                <span class="section-icon">🎮</span>
+                Game Development Projects
+            </h2>
+            <div class="project-grid">
+                <div class="project-card">
+                    <div class="project-image-container">
+                        <div class="project-image-placeholder">🐸</div>
+                        <!-- <img src="YOUR_FROGGO_IMAGE_URL" alt="Froggo Game" class="project-image"> -->
+                    </div>
+                    <div class="project-content">
+                        <div class="project-header">
+                            <div>
+                                <h3 class="project-title">Froggo</h3>
+                                <span class="project-year">2025 • Unity</span>
+                            </div>
+                        </div>
+                        <p class="project-description">
+                            A 2D platformer featuring a frog character collecting music notes. 
+                            Implemented core gameplay mechanics and scoring system.
+                        </p>
+                        <span class="project-role">Coder</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image-container">
+                        <div class="project-image-placeholder">🎨</div>
+                        <!-- <img src="YOUR_PALETTE_PANIC_IMAGE_URL" alt="Palette Panic Game" class="project-image"> -->
+                    </div>
+                    <div class="project-content">
+                        <div class="project-header">
+                            <div>
+                                <h3 class="project-title">Palette Panic</h3>
+                                <span class="project-year">2025 • Unity Game Jam</span>
+                            </div>
+                        </div>
+                        <p class="project-description">
+                            Team-based Unity project created under time constraints. 
+                            Developed core mechanics and gameplay functionality.
+                        </p>
+                        <span class="project-role">Coder</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Full Stack Development Section -->
+        <section class="section">
+            <h2 class="section-title">
+                <span class="section-icon">💻</span>
+                Full Stack Development Projects
+            </h2>
+            <div class="project-grid">
+                <div class="project-card">
+                    <div class="project-image-container">
+                        <div class="project-image-placeholder">📋</div>
+                        <!-- <img src="YOUR_ATTENDANCE_IMAGE_URL" alt="Student Attendance System" class="project-image"> -->
+                    </div>
+                    <div class="project-content">
+                        <div class="project-header">
+                            <div>
+                                <h3 class="project-title">Student Attendance System</h3>
+                                <span class="project-year">2023 • SMKN 1 Sikur</span>
+                            </div>
+                        </div>
+                        <p class="project-description">
+                            A web application for managing student attendance and scheduling. 
+                            Built backend (PHP, DB), frontend (HTML, CSS, JS), and performed thorough testing for reliability.
+                        </p>
+                        <span class="project-role">Full Stack Developer</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image-container">
+                        <div class="project-image-placeholder">🗺️</div>
+                        <!-- <img src="YOUR_GIS_IMAGE_URL" alt="Geospatial Health System" class="project-image"> -->
+                    </div>
+                    <div class="project-content">
+                        <div class="project-header">
+                            <div>
+                                <h3 class="project-title">Geospatial Health System</h3>
+                                <span class="project-year">2020</span>
+                            </div>
+                        </div>
+                        <p class="project-description">
+                            A Geographic Information System (GIS) for managing spatial health data. 
+                            Developed backend for spatial data, built frontend UI, and tested for functionality and accuracy.
+                        </p>
+                        <span class="project-role">Full Stack Developer</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section class="section">
+            <h2 class="section-title">
+                <span class="section-icon">⚡</span>
+                Skills & Technologies
+            </h2>
+            <div class="skills-container">
+                <div class="skill-tag">iOS Development</div>
+                <div class="skill-tag">Swift</div>
+                <div class="skill-tag">Unity</div>
+                <div class="skill-tag">C#</div>
+                <div class="skill-tag">Game Design</div>
+                <div class="skill-tag">UI/UX Design</div>
+                <div class="skill-tag">PHP</div>
+                <div class="skill-tag">JavaScript</div>
+                <div class="skill-tag">HTML/CSS</div>
+                <div class="skill-tag">Database Design</div>
+                <div class="skill-tag">Full Stack Development</div>
+                <div class="skill-tag">Team Collaboration</div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Tiya. Built with passion and code. ✨</p>
+    </footer>
+</body>
+</html>
